@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+ <head>
+	
+	<title> Analyser </title>
+  
+	<meta charset="UTF-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+	<meta content="Bar Chart,Bar Graph,Circle Chart,Column Chart,Donut Chart,Doughnut Chart,Graphics,Multiple Axes,Pie Chart,Spline Chart,Vertical Chart" name="keywords">
+  <meta content="AnyChart - JavaScript Charts designed to be embedded and integrated" name="description">
+	
+	<link href="https://playground.anychart.com/docs/samples/DB_Stage_02/iframe" rel="canonical">
+  <link href="https://cdn.anychart.com/releases/8.10.0/css/anychart-ui.min.css?hcode=a0c21fc77e1449cc86299c5faa067dc4" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/css/analyser.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  <style>html, body, #contain {
+    width: 90%;
+    height: 100%;
+    margin: auto;
+    padding: 0;
+}</style>
+ </head>
+ <body>
+
+	<nav class="navbar navbar-expand-lg ">
+		<div class="container">
+			<a class="navbar-brand" href="/class" style="margin-left: 10px;"> 
+				<img src="https://img.icons8.com/color/48/000000/class.png"/> Academia
+			</a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	   	  	<i class="fas fa-bars"></i>
+	      </button>
+	
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto w-100 justify-content-end">
+			  <li class="nav-item"> <a class="nav-link hover-underline-animation" href="/logout">Logout</a></li>
+			</ul>
+		  </div>
+		</div>
+	</nav>
+	
+	<div class="container" style="height: 300px;" >
+          <canvas id="myChart" style="font-size: 50px;"></canvas>
+    </div>
+	<div id="contain"></div>
+  
+  <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-base.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+  <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-exports.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+  <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-ui.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+  <script type="text/javascript">
+
+window.onload = function(){
+            var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+  type: 'pie',
+	title : "hi",
+  data: {
+    labels: [ "0 - 20% marks", "21 - 40% marks", "41 - 60% marks", "61 - 80% marks", "81 - 100% marks" ],
+    datasets: [{
+      backgroundColor: [
+        "#2ecc71",
+        "#95a5a6",
+        "#9b59b6",
+        "#f1c40f",
+        "#878fff"
+      ],
+
+      data: [ "<%= grades[0] %>" , "<%= grades[1] %>" , "<%= grades[2] %>", "<%= grades[3] %>" , "<%= grades[4] %>" ]
+    }]
+  },
+  options: {  
+    responsive: true,
+    maintainAspectRatio: false
+  }
+});
+        }
+
+  anychart.onDocumentReady(function () {
+
+	// set stage
+	var stage = anychart.graphics.create("contain");
+
+	// create variable for custom theme
+	var customTheme = {
+		"defaultFontSettings": {
+			"fontSize": 9
+		},
+		"chart": {
+			"title": false,
+			"legend": false
+		}
+	};
+
+	
+	// set data
+	var data_2 = [
+		["Not Submitted", "<%= data.not_submitted %>" ],
+		["Submitted Not Graded",   "<%= data.submitted_not_graded %>"],
+		["Submitted and Graded", "<%= data.submitted_graded %>"]
+	];
+
+	// set chart_2
+	var chart_2 = anychart.pie(data_2);
+	chart_2.innerRadius("30%");
+
+	var labels_2 = chart_2.labels();
+	labels_2.fontColor("White");
+	chart_2.title("Data of Students submissions");
+
+    var legend = chart_2.legend();
+    legend.itemsLayout('vertical');
+    legend.position('right');
+    legend.align('top');
+	// chart size and position
+	chart_2.bounds("10%", "10%", "65%", "50%");
+
+	// draw
+	chart_2.container(stage);
+	chart_2.draw();
+
+	
+});</script>
+ </body>
+</html>
